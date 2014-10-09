@@ -13,11 +13,11 @@ import org.jsoup.select.Elements;
  *
  * @author csiebler
  */
-public class YelpCrawler {
+public class Crawler {
     
     // Define the Logger
     private static final Logger LOGGER
-            = Logger.getLogger(YelpCrawler.class.getName());
+            = Logger.getLogger(Crawler.class.getName());
     
     // List of Friends for a User
     private static ArrayList<String> friends;
@@ -47,7 +47,7 @@ public class YelpCrawler {
      * @param currentUser
      * @return 
      */
-    private static ArrayList<String> parseFriends(String currentUser) {
+    public static ArrayList<String> parseFriends(String currentUser) {
         // Initialize the list of friends
         friends = new ArrayList<>();
         
@@ -127,19 +127,6 @@ public class YelpCrawler {
      */
     private static Document retrieveDocument(String username) throws IOException {
         return Jsoup.connect(FRIENDS_PAGE + username).get();
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // Initialize a Test User
-//        String sampleUser = "Rzf35jKV8e8EJdssrae_AA";
-//        String sampleUser = "UiRx8jyS6H957ItwFsP2nQ";
-        String sampleUser = "EJ7ZhRHsMWj8du77LX34gw";
-
-        // Perform Web Crawling
-        System.out.println(YelpCrawler.parseFriends(sampleUser));
     }
 
 }
