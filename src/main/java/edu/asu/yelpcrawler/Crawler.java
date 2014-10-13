@@ -36,6 +36,9 @@ public class Crawler {
     // Yelp Friend Per Page
     private static final Double FRIENDS_PER_PAGE = 100d;
     
+    // Define the Sleep time to prevent too many HTTP requests
+    private static final long SLEEP_TIME = 10000L;
+    
     // Yelp UserID length
     private static final int USER_ID_LENGTH = 22;
     
@@ -79,6 +82,18 @@ public class Crawler {
             for (int i = 1; i < pages; ++i) {
                 // Extract Friends for additional pages
                 extractFriends(retrieveDocument(currentUser + PAGE_ID + (i*100)));
+ 
+                /*
+                 Due to the high number of HTTP requests created when running
+                 the program, sleeping the main thread is required. This will
+                 add an inherant delay to each request and prevent my IP from
+                 being blocked.
+                 */
+                try {
+                    Thread.sleep(SLEEP_TIME);
+                } catch (InterruptedException ex) {
+                    LOGGER.log(Level.SEVERE, null, ex);
+                }
             }
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);

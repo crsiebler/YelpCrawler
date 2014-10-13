@@ -14,26 +14,29 @@ import java.util.logging.Logger;
  * @author csiebler
  */
 public class EdgeList {
-    
+
     // Define the Logger
     private static final Logger LOGGER = Logger.getLogger(EdgeList.class.getName());
-    
+
     // Define the filename to store the edge list
     private static final String FILE_NAME = "edges.txt";
-    
+
     // Define the limit of vertex to visit
     private static final int VERTEX_LIMIT = 1000;
-    
+
+    // Define the Sleep time to prevent too many HTTP requests
+    private static final long SLEEP_TIME = 10000L;
+
     // Define the Strings frequently used
     private static final String COMMA = ",";
     private static final String NEW_LINE = "\n";
-    
+
     // Declare a Queue to hold users
     private static final PriorityQueue<String> QUEUE = new PriorityQueue<>();
-    
+
     // Declare a Collection to hold visited users
     private static final Collection<String> VISITED = new HashSet<>();
-;    
+
     /**
      * Write the vertex-edge relationship to a file in order to persist the
      * data. The relationship is bidirectional, so each connection must be
@@ -60,27 +63,27 @@ public class EdgeList {
      * appropriate data types. Use a PriorityQueue to know what users should be
      * visited. Also, use a HashSet to keep track of users that have already
      * been visited.
-     * 
-     * @param initial 
+     *
+     * @param initial
      */
     private static void gatherData(String initial) {
         // Initialize a counter for the vertex visits
         int count = 0;
-        
+
         // Add the initial vertex to visited & queue
         QUEUE.add(initial);
         VISITED.add(initial);
-        
+
         do {
             // Grab the next vertex in the Queue
             String vertex = QUEUE.poll();
-            
+
             // Crawl the current vertex
             ArrayList<String> edges = Crawler.parseFriends(vertex);
-            
+
             // Save the results from the crawl
             saveData(vertex, edges);
-        
+
             // Add vertex to the queue until the limit is reached
             if (count <= VERTEX_LIMIT) {
                 // Add the results to the queue of vertex
@@ -89,18 +92,30 @@ public class EdgeList {
                     if (!VISITED.contains(edge)) {
                         // Increment the count
                         count++;
-                        
+
                         // Insert the vertex into the Queue
                         QUEUE.add(edge);
-            
+
                         // Add the vertex to the collection of visited
                         VISITED.add(vertex);
                     }
                 }
             }
+
+            /*
+             Due to the high number of HTTP requests created when running the
+             program, sleeping the main thread is required. This will add an
+             inherant delay to each request and prevent my IP from being
+             blocked.
+             */
+            try {
+                Thread.sleep(SLEEP_TIME);
+            } catch (InterruptedException ex) {
+                LOGGER.log(Level.SEVERE, null, ex);
+            }
         } while (QUEUE.peek() != null);
     }
-    
+
     /**
      * @param args the command line arguments
      */
