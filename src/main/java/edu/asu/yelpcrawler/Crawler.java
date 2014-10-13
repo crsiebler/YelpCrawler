@@ -46,6 +46,8 @@ public class Crawler {
     private static final String HREF = "href";
     
     /**
+     * Crawl the friends of the current user. Utilize JSoup's HTML DOM parsing
+     * to assist with the data retrieval.
      * 
      * @param currentUser
      * @return 
@@ -91,7 +93,7 @@ public class Crawler {
      * <li>
      * <ul>
      *  <li>Grab all the current user's friends</li>
-     *  <li>Extract the href attribute for the friends</li>
+     *  <li>Extract the HREF attribute for the friends</li>
      *  <li>Take the substring to get each friends user ID</li>
      * </ul>
      * 
@@ -108,7 +110,7 @@ public class Crawler {
 
             // Make sure the DOM Parser extracted the href properly
             if (!link.isEmpty()) {
-                // Extract the User ID from the href attribute
+                // Extract the User ID from the HREF attribute
                 String userId = link.substring(
                         link.length() - USER_ID_LENGTH,
                         link.length()

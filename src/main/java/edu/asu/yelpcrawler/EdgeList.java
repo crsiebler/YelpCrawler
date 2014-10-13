@@ -35,6 +35,9 @@ public class EdgeList {
     private static final Collection<String> VISITED = new HashSet<>();
 ;    
     /**
+     * Write the vertex-edge relationship to a file in order to persist the
+     * data. The relationship is bidirectional, so each connection must be
+     * written as vertex-edge & edge-vertex.
      * 
      * @param vertex
      * @param edges 
@@ -53,6 +56,10 @@ public class EdgeList {
     }
 
     /**
+     * Take the data retrieved from the crawl and inserts it into the
+     * appropriate data types. Use a PriorityQueue to know what users should be
+     * visited. Also, use a HashSet to keep track of users that have already
+     * been visited.
      * 
      * @param initial 
      */
@@ -60,8 +67,9 @@ public class EdgeList {
         // Initialize a counter for the vertex visits
         int count = 0;
         
-        // Add the initial vertex to visit
+        // Add the initial vertex to visited & queue
         QUEUE.add(initial);
+        VISITED.add(initial);
         
         do {
             // Grab the next vertex in the Queue
