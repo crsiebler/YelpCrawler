@@ -33,6 +33,10 @@ public class Crawler {
     private static final String FRIEND_COUNT = "range-of-total";
     private static final String USER_CLASS = "user-name";
     
+    // Define commonly used Strings
+    private static final String LEFT_BRACKET = " [";
+    private static final String RIGHT_BRACKET = "]";
+    
     // Yelp Friend Per Page
     private static final Double FRIENDS_PER_PAGE = 100d;
     
@@ -99,7 +103,8 @@ public class Crawler {
             LOGGER.log(Level.SEVERE, null, ex);
         }
         
-        System.out.println(friends.size());
+        System.out.println(currentUser + LEFT_BRACKET + friends.size() + RIGHT_BRACKET);
+        
         return friends;
     }
     
