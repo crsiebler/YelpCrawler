@@ -39,6 +39,9 @@ public class Crawler {
     // Yelp UserID length
     private static final int USER_ID_LENGTH = 22;
     
+    // JSoup Time
+    private static final int SOCKET_TIMEOUT = Integer.MAX_VALUE;
+    
     // DOM Parser Helpers
     private static final String HREF = "href";
     
@@ -126,7 +129,7 @@ public class Crawler {
      * @throws IOException 
      */
     private static Document retrieveDocument(String username) throws IOException {
-        return Jsoup.connect(FRIENDS_PAGE + username).get();
+        return Jsoup.connect(FRIENDS_PAGE + username).timeout(SOCKET_TIMEOUT).get();
     }
 
 }
