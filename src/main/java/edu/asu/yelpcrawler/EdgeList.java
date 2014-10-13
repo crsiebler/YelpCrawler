@@ -25,7 +25,7 @@ public class EdgeList {
     private static final int VERTEX_LIMIT = 1000;
 
     // Define the Sleep time to prevent too many HTTP requests
-    private static final long SLEEP_TIME = 10000L;
+    private static final long SLEEP_TIME = 2000L;
 
     // Define the Strings frequently used
     private static final String COMMA = ",";

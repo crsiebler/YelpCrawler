@@ -37,7 +37,7 @@ public class Crawler {
     private static final Double FRIENDS_PER_PAGE = 100d;
     
     // Define the Sleep time to prevent too many HTTP requests
-    private static final long SLEEP_TIME = 10000L;
+    private static final long SLEEP_TIME = 5000L;
     
     // Yelp UserID length
     private static final int USER_ID_LENGTH = 22;
