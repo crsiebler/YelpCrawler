@@ -33,7 +33,7 @@ public class EdgeList {
     private static final long SLEEP_TIME = 2000L;
 
     // Define the Strings frequently used
-    private static final String COMMA = ",";
+    private static final String COMMA = ", ";
     private static final String NEW_LINE = "\n";
 
     // Declare a Queue to hold users
@@ -75,9 +75,8 @@ public class EdgeList {
         // Initialize a counter for the vertex visits
         int count = 0;
 
-        // Add the initial vertex to visited & queue
+        // Add the initial vertex to the queue
         QUEUE.add(initial);
-        VISITED.add(initial);
 
         do {
             // Grab the next vertex in the Queue
@@ -85,6 +84,9 @@ public class EdgeList {
 
             // Crawl the current vertex
             ArrayList<String> edges = Crawler.parseFriends(vertex);
+            
+            // Add the vertex to the collection of visited
+            VISITED.add(vertex);
 
             // Add vertex to the queue until the limit is reached
             if (count <= VERTEX_LIMIT) {
@@ -92,15 +94,24 @@ public class EdgeList {
                 for (String edge : edges) {
                     // Make sure the edge has not been visited
                     if (!VISITED.contains(edge)) {
-                        // Increment the count
-                        count++;
+                        // Make sure the edge is not already added  
+                        if (!QUEUE.contains(edge)) {
+                            // Increment the count
+                            count++;
 
-                        // Insert the vertex into the Queue
-                        QUEUE.add(edge);
-
-                        // Add the vertex to the collection of visited
-                        VISITED.add(vertex);
+                            // Insert the vertex into the Queue
+                            QUEUE.add(edge);
+                        }
                     } else {
+                        // Connection has already been saved, so delete edge
+                        edges.remove(edge);
+                    }
+                }
+            } else {
+                // Loop through the edges to remove duplicates
+                for (String edge : edges) {
+                    // See if the edge has been visited
+                    if (VISITED.contains(edge)) {
                         // Connection has already been saved, so delete edge
                         edges.remove(edge);
                     }
@@ -121,7 +132,7 @@ public class EdgeList {
             } catch (InterruptedException ex) {
                 LOGGER.log(Level.SEVERE, null, ex);
             }
-        } while (QUEUE.peek() != null);
+        } while (QUEUE.peek() != null); // Continue until Queue is empty
     }
 
     /**

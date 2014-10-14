@@ -90,9 +90,6 @@ public class Crawler {
             
             // Loop throuh additional page if available
             for (int i = 1; i < pages; ++i) {
-                // Extract Friends for additional pages
-                extractFriends(retrieveDocument(currentUser + PAGE_ID + (i*100)));
- 
                 /*
                  Due to the high number of HTTP requests created when running
                  the program, sleeping the main thread is required. This will
@@ -104,6 +101,9 @@ public class Crawler {
                 } catch (InterruptedException ex) {
                     LOGGER.log(Level.SEVERE, null, ex);
                 }
+                
+                // Extract Friends for additional pages
+                extractFriends(retrieveDocument(currentUser + PAGE_ID + (i*100)));
             }
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
