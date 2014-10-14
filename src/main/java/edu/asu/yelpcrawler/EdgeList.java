@@ -10,6 +10,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Builds the edge list for the web crawl. Because Yelp friends are a
+ * bidirectional relationship, each edge will be stored as vertex, edge &
+ * edge, vertex. If a node has been visited previously then that edge will be
+ * ignored as to remove duplicates. The edge list will be saved to a file within
+ * the project directory.
  *
  * @author csiebler
  */
@@ -81,9 +86,6 @@ public class EdgeList {
             // Crawl the current vertex
             ArrayList<String> edges = Crawler.parseFriends(vertex);
 
-            // Save the results from the crawl
-            saveData(vertex, edges);
-
             // Add vertex to the queue until the limit is reached
             if (count <= VERTEX_LIMIT) {
                 // Add the results to the queue of vertex
@@ -98,9 +100,15 @@ public class EdgeList {
 
                         // Add the vertex to the collection of visited
                         VISITED.add(vertex);
+                    } else {
+                        // Connection has already been saved, so delete edge
+                        edges.remove(edge);
                     }
                 }
             }
+
+            // Save the results from the crawl
+            saveData(vertex, edges);
 
             /*
              Due to the high number of HTTP requests created when running the

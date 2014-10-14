@@ -10,6 +10,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
+ * Utilizes the JSoup project to assist with HTML crawling. JSoup is an
+ * open-source project that allows a DOM like parsing of HTML code. This code
+ * extracts the friends of a user on Yelp. Because the friends pages are
+ * paginated, each user will need several requests to gather all their friends.
+ * Currently, there are 100 friends per page so if a user has 250 friends then
+ * 3 requests will be made for that user.
  *
  * @author csiebler
  */
