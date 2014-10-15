@@ -47,7 +47,7 @@ public class Crawler {
     private static final Double FRIENDS_PER_PAGE = 100d;
     
     // Define the Sleep time to prevent too many HTTP requests
-    private static final long SLEEP_TIME = 5000L;
+    private static final long SLEEP_TIME = 1000L;
     
     // Yelp UserID length
     private static final int USER_ID_LENGTH = 22;
@@ -116,7 +116,6 @@ public class Crawler {
     
     /**
      * This function performs the following:<br>
-     * <li>
      * <ul>
      *  <li>Grab all the current user's friends</li>
      *  <li>Extract the HREF attribute for the friends</li>
