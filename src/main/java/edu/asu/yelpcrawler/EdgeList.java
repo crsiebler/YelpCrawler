@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,10 +89,16 @@ public class EdgeList {
             // Add the vertex to the collection of visited
             VISITED.add(vertex);
 
+            // Create an iterator to loop through the edges
+            Iterator<String> it = edges.iterator();
+                
             // Add vertex to the queue until the limit is reached
             if (count <= VERTEX_LIMIT) {
-                // Add the results to the queue of vertex
-                for (String edge : edges) {
+                // Add the results to the queue of vertex and remove duplicates
+                while (it.hasNext()) {
+                    // Grab the current iteration
+                    String edge = it.next();
+                    
                     // Make sure the edge has not been visited
                     if (!VISITED.contains(edge)) {
                         // Make sure the edge is not already added  
@@ -104,16 +111,19 @@ public class EdgeList {
                         }
                     } else {
                         // Connection has already been saved, so delete edge
-                        edges.remove(edge);
+                        it.remove();
                     }
                 }
             } else {
                 // Loop through the edges to remove duplicates
-                for (String edge : edges) {
+                while (it.hasNext()) {
+                    // Grab the current iteration
+                    String edge = it.next();
+                    
                     // See if the edge has been visited
                     if (VISITED.contains(edge)) {
                         // Connection has already been saved, so delete edge
-                        edges.remove(edge);
+                        it.remove();
                     }
                 }
             }
