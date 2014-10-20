@@ -1,0 +1,28 @@
+h = open('anonymized.txt', 'w')
+index = 1
+integerRep= {}
+g = open('mapping.txt', 'w')
+f = open('usernames.txt').read().splitlines()
+for line in f:
+	names = line.split(",")
+	user = names[0]
+	friend = names[1]
+	
+	if(user in integerRep):
+		h.write(str(integerRep[user]))
+	else:
+		integerRep[user] = index
+		g.write(user + " --> " + str(index) +"\n")
+		index = index + 1
+		h.write(str(integerRep[user]))
+
+	h.write(",")
+	if(friend in integerRep):
+		h.write(str(integerRep[friend]))
+	else:
+		integerRep[friend] = index
+		g.write(friend + " --> " + str(index) +"\n")
+		index = index + 1
+
+		h.write(str(integerRep[friend]))
+	h.write("\n")
